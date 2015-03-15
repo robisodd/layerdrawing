@@ -7,7 +7,13 @@
     "longName": "Z-Layer Animation Library",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "data/dog.png",
+                "name": "DOG",
+                "type": "raw"
+            }
+        ]
     },
     "sdkVersion": "3",
     "shortName": "Z-Layer Animation Library",

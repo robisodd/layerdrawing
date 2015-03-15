@@ -6,6 +6,10 @@
 #include "layerdrawing.h"
 // #include "layerdrawing.c"
 #define UPDATE_MS 50
+
+  
+  static GBitmap *dog_bitmap;
+  
   
 static Window *main_window;
 static Layer *root_layer;
@@ -49,8 +53,8 @@ void click_config_provider(void *context) {
 //  Drawing Functions
 // ------------------------------------------------------------------------ //
 static void layer1_update(Layer *me, GContext *ctx) {
-  layer_solid_fill(ctx, me, 0b01000011);
-  layer_draw_border(ctx, me, 1, 0b11001100);
+  layer_solid_fill(ctx, me, 0b01110011);
+  layer_draw_border(ctx, me, 1, 0b11111111);
   layer_draw_shadow(ctx, me, 0, 3, 0b11000000);
 }
 
@@ -66,7 +70,9 @@ static void root_layer_update(Layer *me, GContext *ctx) {
   //fill_bitmap(framebuffer, pattern);  // Fill window with Brick, inverted and shifted
   
   //graphics_release_frame_buffer(ctx, graphics_capture_frame_buffer(ctx));
-  fill_window(ctx, pattern);  // Fill window with Brick, inverted and shifted
+//  fill_window(ctx, pattern);  // Fill window with Brick, inverted and shifted
+
+  graphics_draw_bitmap_in_rect(ctx, dog_bitmap, GRect(0,0,144,168));
 }
   
 // ------------------------------------------------------------------------ //
@@ -100,12 +106,17 @@ static void init(void) {
   pattern = brickpattern;
   //pattern_offset(pattern, 0, 4, 255); // invert brick pattern
 
+  
+  dog_bitmap = gbitmap_create_with_resource(RESOURCE_ID_DOG);
+
+  
   //Begin
   window_stack_push(main_window, true); // Display window (true = animated)
   app_timer_register(UPDATE_MS, move_background_timer_callback, NULL); // Schedule a callback
 }
   
 static void deinit(void) {
+  gbitmap_destroy(dog_bitmap);
   window_destroy(main_window);
 }
 
